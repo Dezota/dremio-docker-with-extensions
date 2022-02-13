@@ -17,3 +17,28 @@ an absolute maximum but will not inflate the size smaller values.
 3. Incorporate GIS functionality
 
    - https://github.com/Dezota/dremio-gis-extensions
+
+## Building and Running Docker Image
+
+```
+cd ./build
+make build
+make run
+```
+
+## Using the Docker Hub Image
+
+Get the image from Docker HUB:
+```
+docker pull dezota/dremio-oss-with-ext:20.1.0
+```
+
+*Comment out build line in docker-compose.yml:*
+```
+# build: ./build
+```
+
+Launch Dremio with Dezota Extensions in the Background:
+```
+docker-compose up -d
+```

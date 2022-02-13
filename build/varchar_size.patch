@@ -1,0 +1,65 @@
+diff --git a/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java b/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java
+index 85e99ec1f..b1d80e480 100644
+--- a/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java
++++ b/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java
+@@ -436,7 +436,7 @@ public interface ExecConstants {
+ 
+   BooleanValidator SORT_FILE_BLOCKS = new BooleanValidator("store.file.sort_blocks", false);
+ 
+-  PositiveLongValidator LIMIT_FIELD_SIZE_BYTES = new PositiveLongValidator("limits.single_field_size_bytes", Integer.MAX_VALUE, 32000);
++  PositiveLongValidator LIMIT_FIELD_SIZE_BYTES = new PositiveLongValidator("limits.single_field_size_bytes", Integer.MAX_VALUE, 10485759);
+ 
+   LongValidator FLATTEN_OPERATOR_OUTPUT_MEMORY_LIMIT = new LongValidator("exec.operator.flatten_output_memory_limit", 512*1024*1024);
+ 
+diff --git a/sabot/kernel/src/main/java/com/dremio/exec/expr/fn/hll/HyperLogLog.java b/sabot/kernel/src/main/java/com/dremio/exec/expr/fn/hll/HyperLogLog.java
+index 39806866b..bff67f19c 100644
+--- a/sabot/kernel/src/main/java/com/dremio/exec/expr/fn/hll/HyperLogLog.java
++++ b/sabot/kernel/src/main/java/com/dremio/exec/expr/fn/hll/HyperLogLog.java
+@@ -27,7 +27,7 @@ import org.apache.calcite.sql.type.SqlTypeName;
+ 
+ public class HyperLogLog {
+ 
+-  public static final int HLL_VARBINARY_SIZE = 65536;
++  public static final int HLL_VARBINARY_SIZE = 10485759;
+ 
+   public static class SqlHllDecodeOperator extends SqlFunction {
+     public SqlHllDecodeOperator() {
+diff --git a/sabot/vector-tools/src/main/java/com/dremio/common/expression/CompleteType.java b/sabot/vector-tools/src/main/java/com/dremio/common/expression/CompleteType.java
+index dbe182c11..3d772b025 100644
+--- a/sabot/vector-tools/src/main/java/com/dremio/common/expression/CompleteType.java
++++ b/sabot/vector-tools/src/main/java/com/dremio/common/expression/CompleteType.java
+@@ -139,7 +139,7 @@ import com.google.flatbuffers.FlatBufferBuilder;
+ @JsonDeserialize(using = CompleteType.De.class)
+ public class CompleteType {
+   public static final int MAX_DECIMAL_PRECISION = 38;
+-  public static final int DEFAULT_VARCHAR_PRECISION = 65536;
++  public static final int DEFAULT_VARCHAR_PRECISION = 10485759;
+ 
+   public static final CompleteType NULL = new CompleteType(ArrowType.Null.INSTANCE);
+   public static final CompleteType LATE = new CompleteType(ArrowLateType.INSTANCE);
+diff --git a/sabot/vector-tools/src/main/java/com/dremio/common/types/Types.java b/sabot/vector-tools/src/main/java/com/dremio/common/types/Types.java
+index dce24f317..a513017f9 100644
+--- a/sabot/vector-tools/src/main/java/com/dremio/common/types/Types.java
++++ b/sabot/vector-tools/src/main/java/com/dremio/common/types/Types.java
+@@ -680,7 +680,7 @@ public class Types {
+     }
+ 
+     if (type == MinorType.VARBINARY || type == MinorType.VARCHAR) {
+-      return 65536;
++      return 10485759;
+     }
+ 
+     return 0;
+diff --git a/sabot/vector-tools/src/main/java/org/apache/arrow/vector/util/BasicTypeHelper.java b/sabot/vector-tools/src/main/java/org/apache/arrow/vector/util/BasicTypeHelper.java
+index 84a399053..f79afb8e4 100644
+--- a/sabot/vector-tools/src/main/java/org/apache/arrow/vector/util/BasicTypeHelper.java
++++ b/sabot/vector-tools/src/main/java/org/apache/arrow/vector/util/BasicTypeHelper.java
+@@ -176,7 +176,7 @@ public class BasicTypeHelper {
+   // Default length when casting to varchar : 65536 = 2^16
+   // This only defines an absolute maximum for values, setting
+   // a high value like this will not inflate the size for small values
+-  public static final int VARCHAR_DEFAULT_CAST_LEN = 65536;
++  public static final int VARCHAR_DEFAULT_CAST_LEN = 10485759;
+ 
+   protected static String buildErrorMessage(final String operation, final MinorType type) {
+     return String.format("Unable to %s for minor type [%s]", operation, type);

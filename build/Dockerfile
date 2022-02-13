@@ -18,6 +18,8 @@ MAINTAINER "Brian Holman" <bholman@dezota.com>
 
 # Base Dremio OSS Version 20.1.0
 ENV DREMIO_COMMIT 31bc9b7ce0aa88ac2ab8ebcbc9fb69fb0d2744a8
+ENV CH_CONNECTOR_COMMIT 2648b40c44aebd4a3c47170b334f04d7d969cc54
+ENV GIS_EXT_COMMIT bc41090ed3512355119172211319bd198fa2a4c5
 ENV JAVA_HOME /usr/lib/jvm/zulu8
 
 USER root
@@ -37,6 +39,9 @@ RUN mkdir -p /dremio-build
 COPY ./varchar_size.patch /dremio-build
 
 # Build Dremio with patch to increase VARCHAR/VARBINARY size to support reasonable GIS fields
+# Build and install the RPM file for Dremio
+# Build the Dremio Clickhouse Connector
+# Build the Dremio GIS Extensions
 RUN \
     git config --global user.email bholman@dezota.com && \
     git config --global user.name "Brian Holman" && \
@@ -47,33 +52,24 @@ RUN \
     cd dremio-oss && \
     git checkout $DREMIO_COMMIT && \
     git apply ../varchar_size.patch && \
-    mvn clean install -DskipTests
-
-# Build and install the RPM file for Dremio
-RUN \
+    mvn clean install -DskipTests && \
     cd /dremio-build/dremio-oss/distribution && \
     mvn package -P rpm && \
-    yum -y -q install /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-20.1.0-202202061055110045_36733c65_1.noarch.rpm
-
-ENV CH_CONNECTOR_COMMIT 2648b40c44aebd4a3c47170b334f04d7d969cc54
-
-# Build the Dremio Clickhouse Connector
-RUN \
-   git clone https://github.com/Dezota/dremio-clickhouse-connector.git && \
-   cd dremio-clickhouse-connector && \
-   git checkout $CH_CONNECTOR_COMMIT && \
-   mvn clean install -DskipTests && \
-   cp ./target/dremio-clickhouse-plugin-20.1.0-202202061055110045-36733c65.jar /opt/dremio/jars
-
-ENV GIS_EXT_COMMIT bc41090ed3512355119172211319bd198fa2a4c5
-
-# Build the Dremio GIS Extensions
-RUN \
-   git clone https://github.com/Dezota/dremio-gis-extensions.git && \
-   cd dremio-gis-extensions && \
-   git checkout $GIS_EXT_COMMIT && \
-   mvn clean install -DskipTests && \
-   cp ./target/dremio-gis-extensions-20.1.0-202202061055110045-36733c65.jar /opt/dremio/jars
+    yum -y -q install /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-20.1.0-202202061055110045_36733c65_1.noarch.rpm && \
+    cd /dremio-build && \
+    git clone https://github.com/Dezota/dremio-clickhouse-connector.git && \
+    cd dremio-clickhouse-connector && \
+    git checkout $CH_CONNECTOR_COMMIT && \
+    mvn clean install -DskipTests && \
+    cp ./target/dremio-clickhouse-plugin-20.1.0-202202061055110045-36733c65.jar /opt/dremio/jars && \
+    cd /dremio-build && \
+    git clone https://github.com/Dezota/dremio-gis-extensions.git && \
+    cd dremio-gis-extensions && \
+    git checkout $GIS_EXT_COMMIT && \
+    mvn clean install -DskipTests && \
+    cp ./target/dremio-gis-extensions-20.1.0-202202061055110045-36733c65.jar /opt/dremio/jars && \
+    rm -rf /root/.m2 && \
+    rm -rf /dremio-build
   
 COPY ./startup.sh /opt/dremio/bin/startup.sh
 COPY ./logback.xml /opt/dremio/conf/logback.xml

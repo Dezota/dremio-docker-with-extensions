@@ -19,7 +19,7 @@ MAINTAINER "Brian Holman" <bholman@dezota.com>
 # Base Dremio OSS Version 20.1.0
 ENV DREMIO_COMMIT 31bc9b7ce0aa88ac2ab8ebcbc9fb69fb0d2744a8
 ENV CH_CONNECTOR_COMMIT 2648b40c44aebd4a3c47170b334f04d7d969cc54
-ENV GIS_EXT_COMMIT eb3579b6e92e85cdd4c4d98a550fd0401a15ed67
+ENV GIS_EXT_COMMIT 84ad41b49501d5437525b2538f94f706dbb7082f
 ENV JAVA_HOME /usr/lib/jvm/zulu8
 
 USER root
@@ -52,6 +52,7 @@ RUN \
     cd dremio-oss && \
     git checkout $DREMIO_COMMIT && \
     git apply ../varchar_size.patch && \
+    curl --silent --location https://raw.githubusercontent.com/Dezota/dremio-gis-extensions/main/docs/sqlFunctions.json > ./dac/ui/src/customData/sqlFunctions.json && \
     mvn clean install -DskipTests && \
     cd /dremio-build/dremio-oss/distribution && \
     mvn package -P rpm && \

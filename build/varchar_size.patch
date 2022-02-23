@@ -1,3 +1,50 @@
+diff --git a/.gitignore b/.gitignore
+index 74c39d55f..8babe8b5e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -37,3 +37,4 @@ jetbrains_config.js
+ .cproject
+ CTestTestfile.cmake
+ tsconfig.json
++.idea
+diff --git a/distribution/resources/src/main/resources/bin/dremio-config b/distribution/resources/src/main/resources/bin/dremio-config
+index 0b218ea02..5208a6033 100644
+--- a/distribution/resources/src/main/resources/bin/dremio-config
++++ b/distribution/resources/src/main/resources/bin/dremio-config
+@@ -349,10 +349,10 @@ esac
+ # Newer versions of glibc use an arena memory allocator that causes virtual
+ # memory usage to explode. Tune the variable down to prevent vmem explosion.
+ export MALLOC_ARENA_MAX=${MALLOC_ARENA_MAX:-4}
+-export MALLOC_MMAP_THRESHOLD_=131072
+-export MALLOC_TRIM_THRESHOLD_=131072
+-export MALLOC_TOP_PAD_=131072
+-export MALLOC_MMAP_MAX_=65536
++export MALLOC_MMAP_THRESHOLD_=10485759
++export MALLOC_TRIM_THRESHOLD_=10485759
++export MALLOC_TOP_PAD_=10485759
++export MALLOC_MMAP_MAX_=10485759
+ 
+ # Variables exported from this script
+ export JAVA_VERSION_STRING
+diff --git a/provision/yarn/yarntwill/src/main/java/com/dremio/provision/yarn/YarnController.java b/provision/yarn/yarntwill/src/main/java/com/dremio/provision/yarn/YarnController.java
+index 68e4511cc..da51efae5 100644
+--- a/provision/yarn/yarntwill/src/main/java/com/dremio/provision/yarn/YarnController.java
++++ b/provision/yarn/yarntwill/src/main/java/com/dremio/provision/yarn/YarnController.java
+@@ -120,10 +120,10 @@ public class YarnController {
+ 
+     Map<String, String> envVars = Maps.newHashMap();
+     envVars.put("MALLOC_ARENA_MAX", "4");
+-    envVars.put("MALLOC_MMAP_THRESHOLD_", "131072");
+-    envVars.put("MALLOC_TRIM_THRESHOLD_", "131072");
+-    envVars.put("MALLOC_TOP_PAD_", "131072");
+-    envVars.put("MALLOC_MMAP_MAX_", "65536");
++    envVars.put("MALLOC_MMAP_THRESHOLD_", "10485759");
++    envVars.put("MALLOC_TRIM_THRESHOLD_", "10485759");
++    envVars.put("MALLOC_TOP_PAD_", "10485759");
++    envVars.put("MALLOC_MMAP_MAX_", "10485759");
+     // Set ${DREMIO_HOME} for YarnDaemon to avoid config substitution failure
+     envVars.put(DREMIO_HOME, ".");
+ 
 diff --git a/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java b/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java
 index 85e99ec1f..b1d80e480 100644
 --- a/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java

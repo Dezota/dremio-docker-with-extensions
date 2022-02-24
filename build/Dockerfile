@@ -38,7 +38,7 @@ RUN mkdir -p /dremio-build
     
 COPY ./varchar_size.patch /dremio-build
 
-# Build Dremio with patch to increase VARCHAR/VARBINARY size to support reasonable GIS fields
+# Build Dremio with patch to increase default VARCHAR/VARBINARY size to support reasonable GIS fields and add our GIS Funtions to the DAC search
 # Build and install the RPM file for Dremio
 # Build the Dremio Clickhouse Connector
 # Build the Dremio GIS Extensions
@@ -52,7 +52,6 @@ RUN \
     cd dremio-oss && \
     git checkout $DREMIO_COMMIT && \
     git apply ../varchar_size.patch && \
-    curl --silent --location https://raw.githubusercontent.com/Dezota/dremio-gis-extensions/main/docs/sqlFunctions.json > ./dac/ui/src/customData/sqlFunctions.json && \
     mvn clean install -DskipTests && \
     cd /dremio-build/dremio-oss/distribution && \
     mvn package -P rpm && \

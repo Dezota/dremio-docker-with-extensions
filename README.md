@@ -14,7 +14,8 @@ an absolute maximum but will not inflate the size smaller values.
 
    - https://github.com/Dezota/dremio-clickhouse-connector
 
-3. Incorporate GIS functionality
+3. Incorporate GIS functionality including GIS function search in Dremio
+Analyst Center
 
    - https://github.com/Dezota/dremio-gis-extensions
 

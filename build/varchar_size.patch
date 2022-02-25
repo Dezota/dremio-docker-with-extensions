@@ -7,6 +7,25 @@ index 74c39d55f..8babe8b5e 100644
  CTestTestfile.cmake
  tsconfig.json
 +.idea
+diff --git a/dac/ui/src/components/SideNav/HelpMenu.js b/dac/ui/src/components/SideNav/HelpMenu.js
+index 43b1a37ae..6d3a2cef4 100644
+--- a/dac/ui/src/components/SideNav/HelpMenu.js
++++ b/dac/ui/src/components/SideNav/HelpMenu.js
+@@ -43,6 +43,14 @@ const HelpMenu = (props) => {
+       text={intl.formatMessage({ id: 'SideNav.HelpDoc' })}a
+       rightIcon={externalLink}
+     />
++    <MenuItemLink
++      href='https://github.com/Dezota/dremio-gis-extensions/blob/main/docs/sqlFunctions.md'
++      external
++      newWindow
++      closeMenu={closeMenu}
++      text='GIS Functions Help'
++      rightIcon={externalLink}
++    />
+     {config.displayTutorialsLink &&
+       <MenuItemLink
+         href={intl.formatMessage({id: 'SideNav.TutorialsUrl'})}
 diff --git a/dac/ui/src/customData/sqlFunctions.json b/dac/ui/src/customData/sqlFunctions.json
 index 10245f088..9cd52a79f 100644
 --- a/dac/ui/src/customData/sqlFunctions.json
@@ -2252,6 +2271,33 @@ index 10245f088..9cd52a79f 100644
 +    "example": "ST_Z(ST_GeomFromText('POINT Z (5 7 9)')) -> 9.0"
 +  }
 +]
+diff --git a/dac/ui/src/pages/HomePage/components/modals/AboutModal/AboutModal.js b/dac/ui/src/pages/HomePage/components/modals/AboutModal/AboutModal.js
+index d9da09bac..769905966 100644
+--- a/dac/ui/src/pages/HomePage/components/modals/AboutModal/AboutModal.js
++++ b/dac/ui/src/pages/HomePage/components/modals/AboutModal/AboutModal.js
+@@ -204,6 +204,9 @@ export default class AboutModal extends Component {
+ 
+         <dt style={styles.dtStyle}><FormattedMessage id='App.ChangeTime'/></dt>
+         <dd>{commitTime}</dd>
++
++        <dt style={styles.dtStyle}>Third-Party Extensions</dt>
++        <dd><a href='https://github.com/Dezota/dremio-gis-extensions' target='_blank' rel='noopener noreferrer'>GIS Extensions</a>, <a href='https://github.com/Dezota/dremio-clickhouse-connector' target='_blank' rel='noopener noreferrer'>Clickhouse Connector</a><br/></dd>
+       </dl>;
+   }
+ 
+diff --git a/dac/ui/src/utils/config.js b/dac/ui/src/utils/config.js
+index b86b57fb2..a7c4acd9a 100644
+--- a/dac/ui/src/utils/config.js
++++ b/dac/ui/src/utils/config.js
+@@ -68,7 +68,7 @@ export default { // defaults, and defaults for unit tests
+   queryBundleUsersEnabled: false,
+   downloadRecordsLimit: 1000000,
+   ...((window && window.dremioConfig) || {}),
+-  displayTutorialsLink: false,
++  displayTutorialsLink: true,
+   showMetadataValidityCheckbox: false,
+   ...((window && window.dremioConfig) || {})
+ };
 diff --git a/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java b/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java
 index 85e99ec1f..354fcb215 100644
 --- a/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java

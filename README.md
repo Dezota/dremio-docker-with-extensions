@@ -33,7 +33,7 @@ make run
 
 Get the image from Docker HUB:
 ```
-docker pull dezota/dremio-oss-with-ext:20.1.0-3
+docker pull dezota/dremio-oss-with-ext:20.1.0-4
 ```
 
 Here is the digest for the this version on hub.docker.com:

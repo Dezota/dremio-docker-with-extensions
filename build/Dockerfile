@@ -18,8 +18,8 @@ MAINTAINER "Brian Holman" <bholman@dezota.com>
 
 # Base Dremio OSS Version 20.1.0
 ENV DREMIO_COMMIT 31bc9b7ce0aa88ac2ab8ebcbc9fb69fb0d2744a8
-ENV CH_CONNECTOR_COMMIT 12d20fb391625f256cce9896905be5098ba2185b
-ENV GIS_EXT_COMMIT 56aafec728757c5eea4ff629c05b78a9a423c7d6
+ENV CH_CONNECTOR_COMMIT 6297baf12694d1c8946044ef97e6d78add714e54
+ENV GIS_EXT_COMMIT b566b1e6fc3e1e9a06310ab11f18de4d41e6d7a5
 ENV JAVA_HOME /usr/lib/jvm/zulu8
 
 USER root
@@ -72,7 +72,8 @@ RUN \
     rm -rf /dremio-build
   
 COPY ./startup.sh /opt/dremio/bin/startup.sh
-COPY ./logback.xml /opt/dremio/conf/logback.xml
+# Uncomment this copy to enable full debug
+# COPY ./logback.xml /opt/dremio/conf/logback.xml
 RUN chmod 755 /opt/dremio/bin/startup.sh
 RUN chown -R dremio:dremio /opt/dremio    
 EXPOSE 2181 9047 31010 45678

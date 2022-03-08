@@ -73,9 +73,12 @@ RUN \
   
 COPY ./startup.sh /opt/dremio/bin/startup.sh
 # Uncomment this copy to enable full debug
-# COPY ./logback.xml /opt/dremio/conf/logback.xml
-RUN chmod 755 /opt/dremio/bin/startup.sh
-RUN chown -R dremio:dremio /opt/dremio    
+COPY ./logback.xml /opt/dremio/conf/logback.xml
+COPY ./dremio-bin /opt/dremio/bin/dremio
+RUN chmod 755 /opt/dremio/bin/dremio && \
+    chmod 755 /opt/dremio/bin/startup.sh && \
+    chown -R dremio:dremio /opt/dremio && \
+    chown -R dremio:dremio /usr/lib/jvm/zulu8-ca
 EXPOSE 2181 9047 31010 45678
 USER dremio:dremio
 ENV LANG en_US.UTF-8

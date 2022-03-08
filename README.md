@@ -38,7 +38,7 @@ docker pull dezota/dremio-oss-with-ext:20.1.0-4
 
 Here is the digest for the this version on hub.docker.com:
 ```
-20.1.0-4: digest: sha256:bad3988a2f45952c35095230fb97c08229c1ebed6154d6ef739a3e0cba57c6b1 size: 2207
+20.1.0-6: digest: sha256:b4637316266f2ef34f4c9d75450d356762124e4a0dd412a2a788da09e6d3505d size: 2416
 ````
 
 *Comment out build line in docker-compose.yml:*

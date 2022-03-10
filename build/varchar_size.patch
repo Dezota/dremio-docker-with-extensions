@@ -27,7 +27,7 @@ index 43b1a37ae..6d3a2cef4 100644
        <MenuItemLink
          href={intl.formatMessage({id: 'SideNav.TutorialsUrl'})}
 diff --git a/dac/ui/src/customData/sqlFunctions.json b/dac/ui/src/customData/sqlFunctions.json
-index 10245f088..9cd52a79f 100644
+index 10245f088..bf67b6e83 100644
 --- a/dac/ui/src/customData/sqlFunctions.json
 +++ b/dac/ui/src/customData/sqlFunctions.json
 @@ -1,765 +1,1476 @@
@@ -1841,21 +1841,21 @@ index 10245f088..9cd52a79f 100644
 +  },
 +  {
 +    "name": "ST_GeomFromText",
-+    "args": "([string] {wktString})",
++    "args": "([string] {wktString}, [boolean] {ignoreErrors})",
 +    "returnType": "binary",
 +    "tags": [
 +      "gis"
 +    ],
-+    "description": "Takes a well-known text representation and returns a geometry object."
++    "description": "Takes a well-known text representation and returns a geometry object. Set {{ignoreErrors}} to {{true}} to ignore bad data or {{false}} to fail and show the bad WKT value."
 +  },
 +  {
 +    "name": "ST_GeomFromText",
-+    "args": "([string] {wktString}, [number] {SRID})",
++    "args": "([string] {wktString}, [boolean] {ignoreErrors}, [number] {SRID})",
 +    "returnType": "binary",
 +    "tags": [
 +      "gis"
 +    ],
-+    "description": "Takes a well-known text representation and a spatial reference ID and returns a geometry object."
++    "description": "Takes a well-known text representation and a spatial reference ID and returns a geometry object. Set {{ignoreErrors}} to {{true}} to ignore bad data or {{false}} to fail and show the bad WKT value."
 +  },
 +  {
 +    "name": "ST_GeomFromWKB",

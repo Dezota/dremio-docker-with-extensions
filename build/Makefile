@@ -3,7 +3,7 @@ EDITOR=vim
 all: build
 
 build:
-	docker build -t dezota/dremio-oss-with-ext:20.1.0-6 .
+	docker build -t dezota/dremio-oss-with-ext:20.1.0-7 .
 
 run:
 	docker-compose up -d
@@ -12,5 +12,5 @@ login:
 	docker login -u bkholman
 
 push: login
-	docker push dezota/dremio-oss-with-ext:20.1.0-6
+	docker push dezota/dremio-oss-with-ext:20.1.0-7
 	

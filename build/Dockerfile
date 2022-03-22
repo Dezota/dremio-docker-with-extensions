@@ -19,7 +19,7 @@ MAINTAINER "Brian Holman" <bholman@dezota.com>
 # Base Dremio OSS Version 20.1.0
 ENV DREMIO_COMMIT 31bc9b7ce0aa88ac2ab8ebcbc9fb69fb0d2744a8
 ENV CH_CONNECTOR_COMMIT 6297baf12694d1c8946044ef97e6d78add714e54
-ENV GIS_EXT_COMMIT ccdcab68fa227df6ae630c1c12514f3df400e3e7
+ENV GIS_EXT_COMMIT 28b2412541536943320c5efef0dfcebdffdace7c
 ENV JAVA_HOME /usr/lib/jvm/zulu8
 
 USER root
@@ -30,7 +30,7 @@ RUN \
     yum -y -q install https://cdn.azul.com/zulu/bin/zulu-repo-1.0.0-1.noarch.rpm && \
     curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg && \
-    yum -y -q install git maven zulu8-jdk less python2 rpm-build nodejs yarn make gcc gcc-c++ && \
+    yum -y -q install git maven zulu8-jdk zulu11-jdk less python2 rpm-build nodejs yarn make gcc gcc-c++ && \
     yum -q clean all && \
     rm -rf /var/cache/yum
     
@@ -68,9 +68,13 @@ RUN \
     git checkout $GIS_EXT_COMMIT && \
     mvn clean install -DskipTests && \
     cp ./target/dremio-gis-extensions-20.1.0-202202061055110045-36733c65.jar /opt/dremio/jars && \
+    cp ./docker/build/h3-3.7.2.jar /opt/dremio/jars/3rdparty && \
     rm -rf /root/.m2 && \
     rm -rf /dremio-build
-  
+
+RUN yum -y -q remove zulu8-jdk
+	
+ENV JAVA_HOME /usr/lib/jvm/zulu11
 COPY ./startup.sh /opt/dremio/bin/startup.sh
 # Uncomment this copy to enable full debug
 COPY ./logback.xml /opt/dremio/conf/logback.xml
@@ -78,7 +82,8 @@ COPY ./dremio-bin /opt/dremio/bin/dremio
 RUN chmod 755 /opt/dremio/bin/dremio && \
     chmod 755 /opt/dremio/bin/startup.sh && \
     chown -R dremio:dremio /opt/dremio && \
-    chown -R dremio:dremio /usr/lib/jvm/zulu8-ca
+    chown -R dremio:dremio /usr/lib/jvm/zulu8-ca && \
+    chown -R dremio:dremio /usr/lib/jvm/zulu11-ca 
 EXPOSE 2181 9047 31010 45678
 USER dremio:dremio
 ENV LANG en_US.UTF-8

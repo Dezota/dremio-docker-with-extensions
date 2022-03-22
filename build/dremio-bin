@@ -141,7 +141,7 @@ dremio_internal_start() {
     if [[ -f /run/secrets/kubernetes.io/serviceaccount/ca.crt ]]
     then
         echo "Adding Kubernetes cert to Java key store."
-        keytool -import -v -trustcacerts -alias kubeca -file /run/secrets/kubernetes.io/serviceaccount/ca.crt -keystore /usr/lib/jvm/zulu8/jre/lib/security/cacerts -keypass changeit  -storepass changeit -noprompt
+        keytool -import -v -trustcacerts -alias kubeca -file /run/secrets/kubernetes.io/serviceaccount/ca.crt -keystore /usr/lib/jvm/zulu11/lib/security/cacerts -keypass changeit  -storepass changeit -noprompt
     fi
     
     DREMIO_DAEMON_MAIN_CLASS=${DREMIO_DAEMON_MAIN_CLASS:-"com.dremio.dac.daemon.DremioDaemon"}

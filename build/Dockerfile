@@ -72,7 +72,7 @@ RUN \
     rm -rf /root/.m2 && \
     rm -rf /dremio-build
 
-RUN yum -y -q remove zulu8-jdk
+RUN yum -y -q remove zulu8-jdk java-1.8.0-openjdk-headless.x86_64
 	
 ENV JAVA_HOME /usr/lib/jvm/zulu11
 COPY ./startup.sh /opt/dremio/bin/startup.sh

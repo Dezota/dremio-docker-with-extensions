@@ -26,14 +26,21 @@ USER root
 
 RUN \
     set -xeu && \
-    yum -y module enable nodejs:14 && \
     yum -y -q install https://cdn.azul.com/zulu/bin/zulu-repo-1.0.0-1.noarch.rpm && \
     curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg && \
-    yum -y -q install git maven zulu8-jdk zulu11-jdk less python2 rpm-build nodejs yarn make gcc gcc-c++ && \
+    yum -y -q install git zulu8-jdk zulu11-jdk less python2 rpm-build make gcc gcc-c++ && \
     yum -q clean all && \
     rm -rf /var/cache/yum
-    
+
+RUN mkdir -p /usr/share/maven /usr/share/maven/ref && \
+    curl -fsSL -o /tmp/apache-maven.tar.gz https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz && \
+    tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 && \
+    rm -f /tmp/apache-maven.tar.gz && \
+    ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+
+ENV MAVEN_HOME /usr/share/maven
+     
 RUN mkdir -p /dremio-build
 
 ENV DEZOTA_BUILD 1

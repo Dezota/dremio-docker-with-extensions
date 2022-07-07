@@ -16,10 +16,10 @@ FROM registry.access.redhat.com/ubi8/ubi
 # who's your boss?
 MAINTAINER "Brian Holman" <bholman@dezota.com>
 
-# Base Dremio OSS Version 21.1.1
-ENV DREMIO_COMMIT 812c7f32f9437df52b1d7bd8d5c45f9a79b6e9d2
-ENV CH_CONNECTOR_COMMIT 68afd3a26b2c1dc56a4639af06947544ed07b511
-ENV GIS_EXT_COMMIT b37ef0682a7b9ca064ef15284b69f6dd5e55c81f
+# Base Dremio OSS Version 22.0.0
+ENV DREMIO_COMMIT d41cb52143b6b0289fc8ed4d970bfcf410a669e8
+ENV CH_CONNECTOR_COMMIT 803ced7bb3cbfcd150c6881221aad4edbae3ff39
+ENV GIS_EXT_COMMIT 8f7de45eb1d1af0b302ff6ce701f707106752b29
 ENV JAVA_HOME /usr/lib/jvm/zulu8
 
 USER root
@@ -34,7 +34,7 @@ RUN \
     rm -rf /var/cache/yum
 
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref && \
-    curl -fsSL -o /tmp/apache-maven.tar.gz https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz && \
+    curl -fsSL -o /tmp/apache-maven.tar.gz https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz && \
     tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 && \
     rm -f /tmp/apache-maven.tar.gz && \
     ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
@@ -67,19 +67,19 @@ RUN \
     cd dremio-clickhouse-connector && \
     git checkout $CH_CONNECTOR_COMMIT && \
     mvn clean install -DskipTests && \
-    cp ./target/dremio-clickhouse-plugin-21.1.1-202204292111390812-57b1832f.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-21.1.1-202204292111390812-57b1832f/dremio-community-21.1.1-202204292111390812-57b1832f/jars/ && \
+    cp ./target/dremio-clickhouse-plugin-22.0.0-202206221430090603-1fa4049f.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-22.0.0-202206221430090603-1fa4049f/dremio-community-22.0.0-202206221430090603-1fa4049f/jars/ && \
     cd /dremio-build && \
     git clone https://github.com/Dezota/dremio-gis-extensions.git && \
     cd dremio-gis-extensions && \
     git checkout $GIS_EXT_COMMIT && \
     mvn clean install -DskipTests && \
-    cp ./target/dremio-gis-extensions-21.1.1-202204292111390812-57b1832f.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-21.1.1-202204292111390812-57b1832f/dremio-community-21.1.1-202204292111390812-57b1832f/jars/ && \
-    cp ./docker/build/h3-3.7.2.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-21.1.1-202204292111390812-57b1832f/dremio-community-21.1.1-202204292111390812-57b1832f/jars/3rdparty/ && \
+    cp ./target/dremio-gis-extensions-22.0.0-202206221430090603-1fa4049f.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-22.0.0-202206221430090603-1fa4049f/dremio-community-22.0.0-202206221430090603-1fa4049f/jars/ && \
+    cp ./docker/build/h3-3.7.2.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-22.0.0-202206221430090603-1fa4049f/dremio-community-22.0.0-202206221430090603-1fa4049f/jars/3rdparty/ && \
     cd /dremio-build/dremio-oss/distribution && \
     mvn package -P rpm && \
-    yum -y -q install /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-21.1.1-202204292111390812_57b1832f_1.noarch.rpm && \
+    yum -y -q install /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-22.0.0-202206221430090603_1fa4049f_1.noarch.rpm && \
     mkdir -p /media && \
-    cp /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-21.1.1-202204292111390812_57b1832f_1.noarch.rpm /media/ && \
+    cp /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-22.0.0-202206221430090603_1fa4049f_1.noarch.rpm /media/ && \
     rm -rf /root/.m2 && \
     rm -rf /dremio-build
 

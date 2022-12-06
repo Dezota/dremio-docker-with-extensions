@@ -16,10 +16,10 @@ FROM registry.access.redhat.com/ubi8/ubi
 # who's your boss?
 MAINTAINER "Brian Holman" <bholman@dezota.com>
 
-# Base Dremio OSS Version 22.1.1
-ENV DREMIO_COMMIT 07ab5d99b4fa14b77f12043f2640b1273f7886d5
-ENV CH_CONNECTOR_COMMIT 493fd0ac5066a34d57bcb2a67b83f418cfc69632
-ENV GIS_EXT_COMMIT 124ad1e03528aa0dd1b8a66b51ac815914d968d8
+# Base Dremio OSS Version 23.1.0
+ENV DREMIO_COMMIT eed8353689892bc4e209f5b70065820b23cf3e4c
+ENV CH_CONNECTOR_COMMIT c58ba5db9820cd50693bd3d08ace442105f154f1
+ENV GIS_EXT_COMMIT 45e5b1d887380b49d51c1929dac33666ad2dbe7e
 ENV JAVA_HOME /usr/lib/jvm/zulu8
 
 USER root
@@ -67,19 +67,19 @@ RUN \
     cd dremio-clickhouse-connector && \
     git checkout $CH_CONNECTOR_COMMIT && \
     mvn clean install -DskipTests && \
-    cp ./target/dremio-clickhouse-plugin-23.0.1-202210141019030815-c1de8bcc.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-23.0.1-202210141019030815-c1de8bcc/dremio-community-23.0.1-202210141019030815-c1de8bcc/jars/ && \
+    cp ./target/dremio-clickhouse-plugin-23.1.0-202211250121140756-a79618c7.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-23.1.0-202211250121140756-a79618c7/dremio-community-23.1.0-202211250121140756-a79618c7/jars/ && \
     cd /dremio-build && \
     git clone https://github.com/Dezota/dremio-gis-extensions.git && \
     cd dremio-gis-extensions && \
     git checkout $GIS_EXT_COMMIT && \
     mvn clean install -DskipTests && \
-    cp ./target/dremio-gis-extensions-23.0.1-202210141019030815-c1de8bcc.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-23.0.1-202210141019030815-c1de8bcc/dremio-community-23.0.1-202210141019030815-c1de8bcc/jars/ && \
-    cp ./docker/build/h3-3.7.2.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-23.0.1-202210141019030815-c1de8bcc/dremio-community-23.0.1-202210141019030815-c1de8bcc/jars/3rdparty/ && \
+    cp ./target/dremio-gis-extensions-23.1.0-202211250121140756-a79618c7.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-23.1.0-202211250121140756-a79618c7/dremio-community-23.1.0-202211250121140756-a79618c7/jars/ && \
+    cp ./docker/build/h3-3.7.2.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-23.1.0-202211250121140756-a79618c7/dremio-community-23.1.0-202211250121140756-a79618c7/jars/3rdparty/ && \
     cd /dremio-build/dremio-oss/distribution && \
     mvn package -P rpm && \
-    yum -y -q install /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-23.0.1-202210141019030815_c1de8bcc_1.noarch.rpm && \
+    yum -y -q install /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-23.1.0-202211250121140756_a79618c7_1.noarch.rpm && \
     mkdir -p /media && \
-    cp /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-23.0.1-202210141019030815_c1de8bcc_1.noarch.rpm /media/ && \
+    cp /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-23.1.0-202211250121140756_a79618c7_1.noarch.rpm /media/ && \
     rm -rf /root/.m2 && \
     rm -rf /dremio-build
 

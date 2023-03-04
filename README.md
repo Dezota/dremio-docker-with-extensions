@@ -10,11 +10,7 @@ an absolute maximum but will not inflate the size smaller values.
    - Moved default size to 10,485,759 bytes from 31,999 bytes
    - Moved maximum size to 10,485,759 bytes from 65,536 bytes 
 
-2. Incorporate support for ClickHouse as a Datasource from:
-
-   - https://github.com/Dezota/dremio-clickhouse-connector
-
-3. Incorporate GIS functionality including GIS function search in *Dremio Analyst
+2. Incorporate GIS functionality including GIS function search in *Dremio Analyst
 Center* UI
 
    - https://github.com/Dezota/dremio-gis-extensions
@@ -38,7 +34,7 @@ docker pull dezota/dremio-oss-with-ext:23.0.1-1
 
 Here is the digest for the this version on hub.docker.com:
 ```
-23.1.0-1: digest: sha256:b0f8f1cf35eebda9c578a3dc232d6e7a41a290d7d1bea3e6f4f8eaed649c4919 size: 2631
+24.0.0-1: digest: sha256:a477f178da0addc878b7aab970897535a4e238a6b45302ed5e1fd9fd86d8a78f size: 2631
 ````
 
 *Comment out build line in docker-compose.yml:*

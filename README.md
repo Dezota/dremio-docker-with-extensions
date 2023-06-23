@@ -29,12 +29,12 @@ make run
 
 Get the image from Docker HUB:
 ```
-docker pull dezota/dremio-oss-with-ext:23.0.1-1
+docker pull dezota/dremio-oss-with-ext:24.1.0-1
 ```
 
 Here is the digest for the this version on hub.docker.com:
 ```
-24.0.0-1: digest: sha256:a477f178da0addc878b7aab970897535a4e238a6b45302ed5e1fd9fd86d8a78f size: 2631
+24.1.0-1: digest: sha256:ff885c43240126642b91450c41e2f97647c5427e0ddabdebd8f1c4fe58e3a404 size: 2631
 ````
 
 *Comment out build line in docker-compose.yml:*

@@ -1,13 +1,3 @@
-diff --git a/.gitignore b/.gitignore
-index 731d38082..4413dcb28 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -37,3 +37,4 @@ jetbrains_config.js
- .cproject
- CTestTestfile.cmake
- .python-version
-+.idea
-\ No newline at end of file
 diff --git a/dac/ui/src/components/SideNav/HelpMenu.tsx b/dac/ui/src/components/SideNav/HelpMenu.tsx
 index d098cf1a1..8d5e22a18 100644
 --- a/dac/ui/src/components/SideNav/HelpMenu.tsx
@@ -999,34 +989,33 @@ index 6d4cccefa..4f5cdd712 100644
    }
  ]
 diff --git a/dac/ui/src/pages/HomePage/components/modals/AboutModal/AboutModal.js b/dac/ui/src/pages/HomePage/components/modals/AboutModal/AboutModal.js
-index c89775329..07971d8fe 100644
+index 9676f3711..dbdd46a83 100644
 --- a/dac/ui/src/pages/HomePage/components/modals/AboutModal/AboutModal.js
 +++ b/dac/ui/src/pages/HomePage/components/modals/AboutModal/AboutModal.js
-@@ -234,6 +234,9 @@ export default class AboutModal extends Component {
+@@ -236,6 +236,8 @@ export default class AboutModal extends Component {
            <FormattedMessage id="App.ChangeTime" />
          </dt>
          <dd>{commitTime}</dd>
-+        
 +        <dt style={styles.dtStyle}>Third-Party Extensions</dt>
-+        <dd><a href='https://github.com/Dezota/dremio-gis-extensions' target='_blank' rel='noopener noreferrer'>GIS Extensions</a><br/></dd>
++        <dd><a href='https://github.com/Dezota/dremio-gis-extensions' target='_blank' rel='noopener noreferrer'>GIS Extensions</a><br/></dd>        
        </dl>
      );
    }
 diff --git a/dac/ui/src/utils/config.js b/dac/ui/src/utils/config.js
-index 1ababf229..172bb792c 100644
+index 4ac6bcee5..4aa71a1db 100644
 --- a/dac/ui/src/utils/config.js
 +++ b/dac/ui/src/utils/config.js
-@@ -59,7 +59,7 @@ export default {
+@@ -60,7 +60,7 @@ export default {
    queryBundleUsersEnabled: false,
    downloadRecordsLimit: 1000000,
    ...((window && window.dremioConfig) || {}),
 -  displayTutorialsLink: false,
 +  displayTutorialsLink: true,
    showNewJobsPage: true,
+   useNewDatasetNavigation: true,
    showOldReflectionsListing: false,
-   showMetadataValidityCheckbox: false,
 diff --git a/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java b/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java
-index ac79324b3..bb4b1a8c5 100644
+index 63d0c096f..211db96ab 100644
 --- a/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java
 +++ b/sabot/kernel/src/main/java/com/dremio/exec/ExecConstants.java
 @@ -153,7 +153,7 @@ public interface ExecConstants {
@@ -1038,7 +1027,7 @@ index ac79324b3..bb4b1a8c5 100644
    PositiveLongValidator VARIABLE_WIDTH_VECTOR_MAX_USAGE_PERCENT =
      new PositiveLongValidator("exec.variable-width-vector.max-usage-percent", 100, 95);
    PositiveLongValidator OUTPUT_ALLOCATOR_RESERVATION = new PositiveLongValidator("exec.batch.output.alloc.reservation", Integer.MAX_VALUE, 512 * 1024);
-@@ -446,7 +446,7 @@ public interface ExecConstants {
+@@ -456,7 +456,7 @@ public interface ExecConstants {
  
    BooleanValidator SORT_FILE_BLOCKS = new BooleanValidator("store.file.sort_blocks", false);
  
@@ -1060,19 +1049,6 @@ index 39806866b..bff67f19c 100644
  
    public static class SqlHllDecodeOperator extends SqlFunction {
      public SqlHllDecodeOperator() {
-diff --git a/sabot/vector-tools/src/main/java/com/dremio/common/expression/CompleteType.java b/sabot/vector-tools/src/main/java/com/dremio/common/expression/CompleteType.java
-index f64146dbd..107367b3d 100644
---- a/sabot/vector-tools/src/main/java/com/dremio/common/expression/CompleteType.java
-+++ b/sabot/vector-tools/src/main/java/com/dremio/common/expression/CompleteType.java
-@@ -140,7 +140,7 @@ import com.google.flatbuffers.FlatBufferBuilder;
- @JsonDeserialize(using = CompleteType.De.class)
- public class CompleteType {
-   public static final int MAX_DECIMAL_PRECISION = 38;
--  public static final int DEFAULT_VARCHAR_PRECISION = 65536;
-+  public static final int DEFAULT_VARCHAR_PRECISION = 10485759;
- 
-   public static final CompleteType NULL = new CompleteType(ArrowType.Null.INSTANCE);
-   public static final CompleteType LATE = new CompleteType(ArrowLateType.INSTANCE);
 diff --git a/sabot/vector-tools/src/main/java/com/dremio/common/types/Types.java b/sabot/vector-tools/src/main/java/com/dremio/common/types/Types.java
 index aa5cdc86f..f5c965d36 100644
 --- a/sabot/vector-tools/src/main/java/com/dremio/common/types/Types.java
@@ -1087,7 +1063,7 @@ index aa5cdc86f..f5c965d36 100644
  
      return 0;
 diff --git a/sabot/vector-tools/src/main/java/org/apache/arrow/vector/util/BasicTypeHelper.java b/sabot/vector-tools/src/main/java/org/apache/arrow/vector/util/BasicTypeHelper.java
-index b559239bb..0b60e0889 100644
+index c3d3302bc..f412c54f4 100644
 --- a/sabot/vector-tools/src/main/java/org/apache/arrow/vector/util/BasicTypeHelper.java
 +++ b/sabot/vector-tools/src/main/java/org/apache/arrow/vector/util/BasicTypeHelper.java
 @@ -178,7 +178,7 @@ public class BasicTypeHelper {

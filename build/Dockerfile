@@ -16,9 +16,9 @@ FROM registry.access.redhat.com/ubi8/ubi
 # who's your boss?
 MAINTAINER "Brian Holman" <bholman@dezota.com>
 
-# Base Dremio OSS Version 24.0.0
-ENV DREMIO_COMMIT 98657fada804c04817c5f1eea62edfcd89e95f22
-ENV GIS_EXT_COMMIT 0f0851b1c57f7ea246d275d713536c397e08d827
+# Base Dremio OSS Version 24.1.0
+ENV DREMIO_COMMIT be47367c523e4eded35df4e8fff725f53160558e
+ENV GIS_EXT_COMMIT 1746ca6f9d2ea0fcb48be83687a89f6c0849450e
 ENV JAVA_HOME /usr/lib/jvm/zulu8
 
 USER root
@@ -66,13 +66,13 @@ RUN \
     cd dremio-gis-extensions && \
     git checkout $GIS_EXT_COMMIT && \
     mvn clean install -DskipTests && \
-    cp ./target/dremio-gis-extensions-24.0.0-202302100528110223-3a169b7c.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-24.0.0-202302100528110223-3a169b7c/dremio-community-24.0.0-202302100528110223-3a169b7c/jars/ && \
-    cp ./docker/build/h3-3.7.2.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-24.0.0-202302100528110223-3a169b7c/dremio-community-24.0.0-202302100528110223-3a169b7c/jars/3rdparty/ && \
+    cp ./target/dremio-gis-extensions-24.1.0-202306130653310132-d30779f6.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-24.1.0-202306130653310132-d30779f6/dremio-community-24.1.0-202306130653310132-d30779f6/jars/ && \
+    cp ./docker/build/h3-3.7.2.jar /dremio-build/dremio-oss/distribution/server/target/dremio-community-24.1.0-202306130653310132-d30779f6/dremio-community-24.1.0-202306130653310132-d30779f6/jars/3rdparty/ && \
     cd /dremio-build/dremio-oss/distribution && \
     mvn package -P rpm && \
-    yum -y -q install /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-24.0.0-202302100528110223_3a169b7c_1.noarch.rpm && \
+    yum -y -q install /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-24.1.0-202306130653310132_d30779f6_1.noarch.rpm && \
     mkdir -p /media && \
-    cp /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-24.0.0-202302100528110223_3a169b7c_1.noarch.rpm /media/ && \
+    cp /dremio-build/dremio-oss/distribution/server/target/rpm/dremio-community/RPMS/noarch/dremio-community-24.1.0-202306130653310132_d30779f6_1.noarch.rpm /media/ && \
     rm -rf /root/.m2 && \
     rm -rf /dremio-build
 

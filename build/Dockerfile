@@ -18,7 +18,7 @@ MAINTAINER "Brian Holman" <bholman@dezota.com>
 
 # Base Dremio OSS Version 24.1.0
 ENV DREMIO_COMMIT be47367c523e4eded35df4e8fff725f53160558e
-ENV GIS_EXT_COMMIT 1746ca6f9d2ea0fcb48be83687a89f6c0849450e
+ENV GIS_EXT_COMMIT 3be81aea205ef007be47a49ef65c6b01e26f0466
 ENV JAVA_HOME /usr/lib/jvm/zulu8
 
 USER root
